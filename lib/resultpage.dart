@@ -29,7 +29,6 @@ class Result extends StatefulWidget {
 class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
-    
     return MapPage();
   }
 }
