@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:VoloSpesa/theame.dart';
-import 'package:VoloSpesa/map_boxes.dart';
+import 'package:VoloSpesa/mappage.dart';
 
 class ResultPage extends StatelessWidget {
   final int height;
@@ -12,7 +11,7 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('YOUR RESULT'),
+        title: Text('MAPPA'),
         backgroundColor: Colors.transparent,
         leading: IconButton(icon:Icon(Icons.arrow_back_ios), onPressed: () => Navigator.pop(context),),
       ),
