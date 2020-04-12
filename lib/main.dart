@@ -1,9 +1,6 @@
-import 'package:VoloSpesa/homepageui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'choosepage.dart';
-import 'package:VoloSpesa/homepageui.dart';
  
  
 void main() => runApp(MyApp());
@@ -20,7 +17,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class HomePage extends StatefulWidget {
   @override

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:geolocator/geolocator.dart';
 
 
 class MapPage extends StatefulWidget {
@@ -22,11 +22,27 @@ class MapPageState extends State<MapPage> {
   getMarkers() async {
     http.Response response = await http.get('https://volospesa-server.herokuapp.com/api/v1/messages');
     data = json.decode(response.body);
-    
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       usersData = data;
     });
     
+    allMarkers.add(
+      new Marker(
+        width: 74.0,
+        height: 74.0,
+        point: new LatLng(position.latitude, position.longitude),
+        builder: (context) => new Container(
+          child: IconButton(
+            icon: Image(image: new AssetImage("assets/images/kidrunning.png")),
+            color: Colors.blue,
+            iconSize: 100.0,
+            onPressed: () {}
+          )
+        )
+      )
+    );
+
     for (int i = 0; i < usersData.length; i++) {
     allMarkers.add(
       new Marker(
@@ -35,16 +51,13 @@ class MapPageState extends State<MapPage> {
         point: new LatLng(usersData[i]["latitudine"], usersData[i]["longitudine"]),
         builder: (context) => new Container(
           child: IconButton(
-            icon: Image(
-              image: new AssetImage("assets/images/oldies.png"),
-              
-            ),
+            icon: Image(image: new AssetImage("assets/images/oldies.png")),
             color: Colors.blue,
             iconSize: 100.0,
             onPressed: () {
+              
               print('Marker tapped');
               showModalBottomSheet(context: context, backgroundColor: Colors.transparent, builder: (builder){
-                
                 return Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom,
@@ -145,7 +158,10 @@ class MapPageState extends State<MapPage> {
                                 color: Colors.blue[100],
                                 child: InkWell(
                                   onTap: () {
+                                    
                                     Navigator.of(context).pop();
+                                    //deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"]);                                  
+                                    //delete request
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -200,9 +216,6 @@ class MapPageState extends State<MapPage> {
                                   ),
                                 ),
                               ),
-
-
-
                             ],
                           ),
                         ),       
@@ -225,18 +238,8 @@ class MapPageState extends State<MapPage> {
     getMarkers();
 
   }
-    double zoomVal=5.0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _buildMapBox(context),
-          _buildContainer(),
-        ],
-      ),
-    );
-  }
+
+
 
   Widget _buildMapBox(BuildContext context) {
     return Container(
@@ -375,6 +378,18 @@ class MapPageState extends State<MapPage> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _buildMapBox(context),
+          _buildContainer(),
+        ],
+      ),
+    );
+  }
 /* 
   Future<void> _gotoLocation(double lat,double long) async {
     final GoogleMapController controller = await _controller.future;
@@ -383,3 +398,15 @@ class MapPageState extends State<MapPage> {
   } */
 
 }
+
+
+/*Future<http.Response> deleteMarker(String nome, String indirizzo, String telefono, String spesa) async {
+   
+  if (response.statusCode == 200) {
+    print('POST avvenuta correttamente');
+  }
+  else {
+    print('Errore durante la POST');   
+    print(response.statusCode);   
+  }
+}*/

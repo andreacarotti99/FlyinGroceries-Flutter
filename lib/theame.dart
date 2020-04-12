@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-  Color primary = Color.fromRGBO(28, 40, 51, 0.8);
-  Color secondary = Colors.black;
+  Color primary = Color(0xfff2f0f7);
+  Color secondary = Color(0xffffffff);
   Color primaryButtonColor =   Colors.orangeAccent; //HexColor("e74c3c");
   Color secondaryButtonColor = HexColor("212f3c");
 
