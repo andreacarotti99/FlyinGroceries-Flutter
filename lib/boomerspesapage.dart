@@ -1,8 +1,7 @@
+import 'package:VoloSpesa/theame.dart';
 import 'package:flutter/material.dart';
 import 'package:VoloSpesa/models.dart';
 import 'package:VoloSpesa/boomerconfirmationpage.dart';
-
-
 
 
 class SpesaPage extends StatelessWidget {
@@ -32,46 +31,100 @@ class _SpesaWidgetState extends State<SpesaWidget> {
   _groceriesController.text = widget.boomerInfo.groceries;
 
     return Scaffold(
+      backgroundColor: primary,
       body: Center(
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.5)
-                  ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                child: TextFormField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Inserisci la tua spesa',
-                        hintStyle: TextStyle(color: Colors.grey),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                      Center(
+                          child: Text(
+                            'Digita qua sotto la tua spesa e premi CONFERMA', 
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Averta',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0,
+                              color: Colors.black
+                            )
+                          ),
                       ),
-                      controller: _groceriesController,
-                      validator: (String value) {
-                        if (value.isEmpty) {
-                          return 'Perfavore inserisci la spesa: premi lo spazio bianco e poi digita';
+
+                      Container(
+                        width: 400,
+                        height: 250,
+                        decoration: BoxDecoration(
+                          color: secondary,
+                          borderRadius: BorderRadius.circular(14.0),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                        child: Center(
+                              child: Container(
+                                width: 300,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  style: TextStyle(color: Colors.black),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Inserisci la tua spesa',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                  controller: _groceriesController,
+                                  validator: (String value) {
+                                    if (value.isEmpty) {
+                                      return 'Perfavore inserisci la tua spesa: premi lo spazio bianco e poi digita';
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                        
+                      ),
+
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Material(
+                    elevation: 10.0,
+                    shadowColor: Colors.black45,
+                    shape: StadiumBorder(),
+                    clipBehavior: Clip.antiAlias,
+                    color: Colors.blue,
+                    child: InkWell(
+                      onTap: () {
+                  
+                      setState(() {
+                        if (_formKey.currentState.validate()) {
+                          widget.boomerInfo.groceries = _groceriesController.text;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(boomerInfo: widget.boomerInfo,)));
                         }
+                      });  
                       },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0,
+                              vertical: 20.0,
+                            ),
+                            child: Text(
+                              'CONTINUA',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              RaisedButton(
-                  child: Text("Continua"),
-                  onPressed: (){
-                    setState(() {
-                      if (_formKey.currentState.validate()) {
-                        widget.boomerInfo.groceries = _groceriesController.text;
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationPage(boomerInfo: widget.boomerInfo,)));
-                      }
-                    });
-                  },
-              ),
-            ],
+              ],
+            ),
           ),
         )
       )

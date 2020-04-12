@@ -68,6 +68,8 @@ flutter:
      - assets/images/oldies.png
      - assets/images/kidrunning.png
      - assets/images/foodright.png
+     - assets/images/sitmarker.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -90,6 +92,9 @@ flutter:
       fonts:
         - asset: assets/fonts/OpenSans-Bold.ttf
         - asset: assets/fonts/Opensans-Regular.ttf
+    - family: Averta
+      fonts:
+        - asset: assets/fonts/Averta-Semibold.ttf
           
   #         style: italic
   #   - family: Trajan Pro

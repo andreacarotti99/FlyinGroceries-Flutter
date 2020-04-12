@@ -35,7 +35,7 @@ class _ChoosePageState extends State<ChoosePage> {
                       'Seleziona il profilo che meglio ti identifica', 
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'OpenSans',
+                        fontFamily: 'Averta',
                         fontWeight: FontWeight.bold,
                         fontSize: 28.0,
                         color: Colors.black
@@ -87,7 +87,7 @@ class _ChoosePageState extends State<ChoosePage> {
                         Text(
                           'Sono un Volontario', 
                           style: TextStyle(
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'Averta',
                             fontSize: 16.0,
                             color: Colors.black
                           )
@@ -136,7 +136,7 @@ class _ChoosePageState extends State<ChoosePage> {
                         Text(
                           'Sono anziano', 
                           style: TextStyle(
-                            fontFamily: 'OpenSans',
+                            fontFamily: 'Averta',
                             fontSize: 16.0,
                             color: Colors.black
                           )

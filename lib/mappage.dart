@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
+import 'package:VoloSpesa/theame.dart';
 
 
 class MapPage extends StatefulWidget {
@@ -46,14 +47,13 @@ class MapPageState extends State<MapPage> {
     for (int i = 0; i < usersData.length; i++) {
     allMarkers.add(
       new Marker(
-        width: 74.0,
-        height: 74.0,
+        width: 84.0,
+        height: 84.0,
         point: new LatLng(usersData[i]["latitudine"], usersData[i]["longitudine"]),
         builder: (context) => new Container(
           child: IconButton(
-            icon: Image(image: new AssetImage("assets/images/oldies.png")),
-            color: Colors.blue,
-            iconSize: 100.0,
+            icon: Image(image: new AssetImage("assets/images/sitmarker.png")),
+            iconSize: 140.0,
             onPressed: () {
               
               print('Marker tapped');
@@ -64,7 +64,7 @@ class MapPageState extends State<MapPage> {
                   ),
                   child: Material(
                     elevation: 12.0,
-                    color: Colors.blueGrey,
+                    color: primary,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(32.0),
                     ),
@@ -78,12 +78,13 @@ class MapPageState extends State<MapPage> {
                           child: Row(
                             children: <Widget>[
                               SizedBox.fromSize(
-                                size: Size.fromRadius(32.0),
+                                size: Size.fromRadius(38.0),
                                 child: Material(
+                                  color: primary,
                                   shape: CircleBorder(),
                                   clipBehavior: Clip.antiAlias,
                                   child: Image.asset(
-                                    'assets/images/oldies.png',
+                                    'assets/images/sitmarker.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -97,12 +98,22 @@ class MapPageState extends State<MapPage> {
                                       usersData[i]["nome"],
                                       style: TextStyle(
                                         fontSize: 24.0,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text('Consegnagli adesso la spesa'),
-                                    SizedBox(height: 8.0),
+                                    Text('Consegnagli adesso la spesa',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,                                     
+                                      ),                                    
+                                    ),
                                     Text(usersData[i]["telefono"].toString(),
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),                                    
                                     ),
                                   ],
                                 ),
@@ -110,7 +121,7 @@ class MapPageState extends State<MapPage> {
                               IconButton(
                                  icon: Icon(
                                    Icons.cancel,
-                                   color: Colors.white,
+                                   color: Colors.blue[100],
                                    size: 25,
                                  ),
                               onPressed: () { Navigator.of(context).pop();}
@@ -148,10 +159,11 @@ class MapPageState extends State<MapPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              SizedBox(height: 20),
 
                               //First Button
                               Material(
-                                elevation: 6.0,
+                                elevation: 10.0,
                                 shadowColor: Colors.black45,
                                 shape: StadiumBorder(),
                                 clipBehavior: Clip.antiAlias,
@@ -169,10 +181,10 @@ class MapPageState extends State<MapPage> {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 32.0,
-                                          vertical: 16.0,
+                                          vertical: 20.0,
                                         ),
                                         child: Text(
-                                          'CONSEGNALA',
+                                          'SEGNA COME CONSEGNA AVVENUTA',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -184,10 +196,10 @@ class MapPageState extends State<MapPage> {
                                 ),
                               ),
 
-                              SizedBox(height: 20),
+                              SizedBox(height: 30),
                               //Second Button
                               Material(
-                                elevation: 6.0,
+                                elevation: 10.0,
                                 shadowColor: Colors.black45,
                                 shape: StadiumBorder(),
                                 clipBehavior: Clip.antiAlias,
@@ -202,7 +214,7 @@ class MapPageState extends State<MapPage> {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 32.0,
-                                          vertical: 16.0,
+                                          vertical: 20.0,
                                         ),
                                         child: Text(
                                           'CHIAMA',
@@ -273,7 +285,7 @@ class MapPageState extends State<MapPage> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20.0),
         height: 140.0,
-        child: usersData == null ? Center(child: SpinKitCubeGrid(color: Colors.white, size: 50.0,)) : 
+        child: usersData == null ? Center(child: SpinKitThreeBounce(color: Colors.white, size: 20.0,)) : 
             ListView.builder(
               itemCount: usersData == null ? 0 : data.length,
               scrollDirection: Axis.horizontal,

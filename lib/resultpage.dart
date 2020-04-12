@@ -1,3 +1,4 @@
+import 'package:VoloSpesa/theame.dart';
 import 'package:flutter/material.dart';
 import 'package:VoloSpesa/mappage.dart';
 
@@ -11,9 +12,22 @@ class ResultPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('MAPPA'),
-        backgroundColor: Colors.transparent,
-        leading: IconButton(icon:Icon(Icons.arrow_back_ios), onPressed: () => Navigator.pop(context),),
+        backgroundColor: secondary,
+        leading: IconButton(icon:Icon(Icons.arrow_back_ios, color: Colors.black), onPressed: () => Navigator.pop(context),),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            
+            Image.asset('assets/images/kidrunning.png', fit: BoxFit.contain, height: 32.0),
+            Container(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    'VoloSpesa',
+                    style: TextStyle(color: Colors.black),
+                  )
+            )
+          ],
+        ),
       ),
       body: Result(),
     );
