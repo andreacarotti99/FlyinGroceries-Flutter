@@ -70,12 +70,12 @@ class _SpesaWidgetState extends State<SpesaWidget> {
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci la tua spesa',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
                                   ),
                                   controller: _groceriesController,
                                   validator: (String value) {
                                     if (value.isEmpty) {
-                                      return 'Perfavore inserisci la tua spesa: premi lo spazio bianco e poi digita';
+                                      return 'Perfavore inserisci la tua spesa';
                                     }
                                   },
                                 ),

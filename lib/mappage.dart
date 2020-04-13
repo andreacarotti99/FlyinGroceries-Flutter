@@ -18,24 +18,25 @@ class MapPageState extends State<MapPage> {
   List <Widget> allPaddings = [];
   List data;
   List usersData;
+  var codicedistato;
+  Position position;
 
   //Completer<GoogleMapController> _controller = Completer();
   getMarkers() async {
     http.Response response = await http.get('https://volospesa-server.herokuapp.com/api/v1/messages');
     data = json.decode(response.body);
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       usersData = data;
     });
     
     allMarkers.add(
       new Marker(
-        width: 74.0,
-        height: 74.0,
+        width: 60.0,
+        height: 60.0,
         point: new LatLng(position.latitude, position.longitude),
         builder: (context) => new Container(
           child: IconButton(
-            icon: Image(image: new AssetImage("assets/images/kidrunning.png")),
+            icon: Image(image: new AssetImage("assets/images/usermarker.png")),
             color: Colors.blue,
             iconSize: 100.0,
             onPressed: () {}
@@ -43,7 +44,7 @@ class MapPageState extends State<MapPage> {
         )
       )
     );
-
+    
     for (int i = 0; i < usersData.length; i++) {
     allMarkers.add(
       new Marker(
@@ -172,8 +173,14 @@ class MapPageState extends State<MapPage> {
                                   onTap: () {
                                     
                                     Navigator.of(context).pop();
-                                    //deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"]);                                  
-                                    //delete request
+                                    deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"], usersData[i]["_id"]);
+                                    setState(() {
+                                      allMarkers = [];
+                                      getMarkers();
+                                    });
+                                    
+                                    
+
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -253,13 +260,13 @@ class MapPageState extends State<MapPage> {
 
 
 
-  Widget _buildMapBox(BuildContext context) {
+  Widget _buildMapBox(BuildContext context, double latitudine, double longitudine) {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
         child: new FlutterMap(
           options: new MapOptions(
-              center: new LatLng(45.4670, 9.1815), zoom: 13.0),
+              center: new LatLng(latitudine, longitudine), zoom: 13.0),
           layers: [
             new TileLayerOptions(
                 urlTemplate:
@@ -391,14 +398,36 @@ class MapPageState extends State<MapPage> {
     );
   }
 
+  Future<void> getLocation() async {
+    position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _buildMapBox(context),
-          _buildContainer(),
-        ],
+      body: FutureBuilder( 
+        future: getLocation(),
+        builder: (context, snapshot) { 
+          if(snapshot.connectionState == ConnectionState.done){
+          return Stack(
+          children: <Widget>[
+            _buildMapBox(context, position.latitude, position.longitude),
+            _buildContainer(),
+          ],
+        );
+        }
+        else {
+          return Scaffold(
+            backgroundColor: primary,
+            body: Row(
+              children: <Widget>[
+                Center(
+                  child: SpinKitThreeBounce(color: Colors.black, size: 20.0),
+                )
+              ],
+            ));
+        }
+      }
       ),
     );
   }
@@ -409,16 +438,26 @@ class MapPageState extends State<MapPage> {
       bearing: 45.0,)));
   } */
 
+
+  Future<http.Response> deleteMarker(String nome, String indirizzo, String telefono, String spesa, String noteID) async {
+
+    var response = await http.delete(
+    'https://volospesa-server.herokuapp.com/api/v1/messages/' + noteID,
+    headers: {
+      'content-type': 'application/json'
+    });
+
+    if (response.statusCode == 200) {
+      print('DELETE avvenuta correttamente');
+      codicedistato = 200;
+    }
+    else {
+      print('Errore durante la DELETE');   
+      print(response.statusCode); 
+    }
+  }
+
+
 }
 
 
-/*Future<http.Response> deleteMarker(String nome, String indirizzo, String telefono, String spesa) async {
-   
-  if (response.statusCode == 200) {
-    print('POST avvenuta correttamente');
-  }
-  else {
-    print('Errore durante la POST');   
-    print(response.statusCode);   
-  }
-}*/

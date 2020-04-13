@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:VoloSpesa/boomerspesapage.dart';
 import 'package:VoloSpesa/models.dart';
 import 'package:VoloSpesa/theame.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoder/geocoder.dart';
 
-
+const kGoogleApiKey = "AIzaSyCvkzzEUKf9BF4bSZdBzvvLuU9s3xP2Ae8";
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class MyFormsPage extends StatefulWidget {
   @override
@@ -12,7 +16,7 @@ class MyFormsPage extends StatefulWidget {
 
 class _MyFormsPageState extends State<MyFormsPage> {
   var _formKey = GlobalKey<FormState>();
-  final boomerInfo = new BoomerInfo(null, null, null, null);
+  final boomerInfo = new BoomerInfo(null, null, null, null, null, null);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,24 @@ class _MyFormsPageState extends State<MyFormsPage> {
     _nameController.text = boomerInfo.name;
     _addressController.text = boomerInfo.address;
     _phoneController.text = boomerInfo.phone;
+
+  Future<Null> displayPrediction(Prediction p) async {
+      if (p != null) {
+        PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
+        var placeId = p.placeId;
+
+        double lat = detail.result.geometry.location.lat;
+        double lng = detail.result.geometry.location.lng;
+        
+        var address = await Geocoder.local.findAddressesFromQuery(p.description);
+        print(lat);
+        print(lng);
+        boomerInfo.lat = lat;
+        boomerInfo.long = lng;
+        _addressController.text = p.description;
+      }
+    }
+    
     
     
     return Scaffold( 
@@ -71,18 +93,21 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               ),
                               SizedBox(width: 10.0,),
                               SizedBox(
-                                width: 200,
+                                width: 280,
                                 child: TextFormField(
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo nome',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontFamily: 'Averta'
+                                    ),
                                   ),
                                   controller: _nameController,
                                   validator: (String value) {
                                     if (value.isEmpty) {
-                                      return 'Perfavore inserisci il tuo nome: premi lo spazio bianco e poi digita';
+                                      return 'Premi lo spazio bianco e poi digita il tuo nome';
                                     }
                                   },
                                 ),
@@ -110,13 +135,13 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               ),
                               SizedBox(width: 10.0,),
                               SizedBox(
-                                width: 200,
+                                width: 280,
                                 child: TextFormField(
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo telefono',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
                                   ),
                                   controller: _phoneController,
                                   validator: (String value) {
@@ -148,19 +173,32 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                 height: 30.0,
                               ),
                               SizedBox(width: 10.0,),
+                              
                               SizedBox(
-                                width: 200,
+                                width: 280,
                                 child: TextFormField(
+                                  onTap: () async {
+                                    Prediction p = await PlacesAutocomplete.show(context: context,
+                                    apiKey: "AIzaSyCvkzzEUKf9BF4bSZdBzvvLuU9s3xP2Ae8",
+                                    mode: Mode.overlay,
+                                    language: "it", components: [
+                                      Component(Component.country, "it")
+                                    ]);
+                                    displayPrediction(p);
+
+                                    
+                                  },
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo indirizzo',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
                                   ),
                                   controller: _addressController,
                                   validator: (String value) {
                                     if (value.isEmpty) {
-                                      return 'Perfavore inserisci il tuo indirizzo: premi lo spazio bianco e poi digita il tuo indirizzo';
+                                      
+                                      return 'Premi lo spazio bianco e poi digita il tuo indirizzo';
                                     }
                                   },
                                 ),
@@ -186,17 +224,14 @@ class _MyFormsPageState extends State<MyFormsPage> {
                   child: InkWell(
                     onTap: () {
                 
-                    setState(() {
-                      if (_formKey.currentState.validate()) {
-                        boomerInfo.name = _nameController.text;
-                        boomerInfo.address = _addressController.text;
-                        boomerInfo.phone = _phoneController.text;
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SpesaPage(boomerInfo: boomerInfo,)));
-                      }
-                    });      
-                      
-                      //deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"]);                                  
-                      //delete request
+                      setState(() {
+                        if (_formKey.currentState.validate()) {
+                          boomerInfo.name = _nameController.text;
+                          boomerInfo.address = _addressController.text;
+                          boomerInfo.phone = _phoneController.text;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SpesaPage(boomerInfo: boomerInfo,)));
+                        }
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +245,8 @@ class _MyFormsPageState extends State<MyFormsPage> {
                             'CONTINUA',
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Averta'
                             ),
                           ),
                         ),
@@ -219,8 +255,6 @@ class _MyFormsPageState extends State<MyFormsPage> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         )
@@ -229,3 +263,6 @@ class _MyFormsPageState extends State<MyFormsPage> {
   }
 }
 
+
+
+  
