@@ -1,3 +1,4 @@
+import 'package:VoloSpesa/choosepage.dart';
 import 'package:VoloSpesa/theame.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,17 +28,55 @@ class ConfirmationPage extends StatelessWidget {
                   fontSize: 24.0,
               )),
             ),
-            RaisedButton(
-                child: Text("Continua"),
-                onPressed: (){
-                  uploadBoomerInfo(boomerInfo.name, boomerInfo.address, boomerInfo.phone, boomerInfo.groceries, boomerInfo.lat, boomerInfo.long);
-                  print(boomerInfo.groceries);
-                  print(boomerInfo.name);
-                  print(boomerInfo.address);
-                  print(boomerInfo.phone);
-                  
-                },
-            ), 
+            
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Material(
+                  elevation: 10.0,
+                  shadowColor: Colors.black45,
+                  shape: StadiumBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  color: Colors.green[300],
+                  child: InkWell(
+                    onTap: () {
+                      uploadBoomerInfo(boomerInfo.name, boomerInfo.address, boomerInfo.phone, boomerInfo.groceries, boomerInfo.lat, boomerInfo.long);
+                      print(boomerInfo.groceries);
+                      print(boomerInfo.name);
+                      print(boomerInfo.address);
+                      print(boomerInfo.phone);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
+
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32.0,
+                            vertical: 20.0,
+                          ),
+                          child: Text(
+                            'CONFERMA',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Averta',
+                              fontSize: 16.0
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
+
+
+
+
+
           ]
         ),
       )

@@ -35,7 +35,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
         double lat = detail.result.geometry.location.lat;
         double lng = detail.result.geometry.location.lng;
         
-        var address = await Geocoder.local.findAddressesFromQuery(p.description);
+        var address = await Geocoder.local.findAddressesFromQuery(p.description); //da fixare su ios
         print(lat);
         print(lng);
         boomerInfo.lat = lat;
@@ -137,8 +137,10 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               SizedBox(
                                 width: 280,
                                 child: TextFormField(
+                                  keyboardType: TextInputType.numberWithOptions(),
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
+
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo telefono',
                                     hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
@@ -178,12 +180,17 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                 width: 280,
                                 child: TextFormField(
                                   onTap: () async {
-                                    Prediction p = await PlacesAutocomplete.show(context: context,
-                                    apiKey: "AIzaSyCvkzzEUKf9BF4bSZdBzvvLuU9s3xP2Ae8",
-                                    mode: Mode.overlay,
-                                    language: "it", components: [
-                                      Component(Component.country, "it")
-                                    ]);
+                                    Prediction p = await PlacesAutocomplete.show(
+                                      context: context,
+                                      apiKey: "AIzaSyCvkzzEUKf9BF4bSZdBzvvLuU9s3xP2Ae8",
+                                      mode: Mode.overlay,
+                                      language: "it",
+                                      components: [Component(Component.country, "it")],
+                                      overlayBorderRadius: BorderRadius.circular(14.0),
+                                      hint: 'Inserisci qui il tuo indirizzo',
+                                      logo: Container(width: 380, height: 10),
+                                      
+                                    );
                                     displayPrediction(p);
 
                                     
@@ -246,7 +253,8 @@ class _MyFormsPageState extends State<MyFormsPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Averta'
+                              fontFamily: 'Averta',
+                              fontSize: 16.0
                             ),
                           ),
                         ),

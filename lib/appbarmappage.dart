@@ -13,19 +13,13 @@ class ResultPage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: secondary,
-        leading: IconButton(icon:Icon(Icons.arrow_back_ios, color: Colors.black), onPressed: () => Navigator.pop(context),),
+        //leading: IconButton(icon:Icon(Icons.arrow_back_ios, color: Colors.black), onPressed: () => Navigator.pop(context),),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(width: 60,),
+            Image.asset('assets/images/logo.png', fit: BoxFit.contain, height: 32.0),
             
-            Image.asset('assets/images/kidrunning.png', fit: BoxFit.contain, height: 32.0),
-            Container(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: Text(
-                    'VoloSpesa',
-                    style: TextStyle(color: Colors.black),
-                  )
-            )
           ],
         ),
       ),

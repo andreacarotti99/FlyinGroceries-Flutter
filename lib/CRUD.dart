@@ -1,0 +1,19 @@
+
+import 'package:http/http.dart' as http;
+
+Future<http.Response> deleteMarker(String nome, String indirizzo, String telefono, String spesa, String noteID) async {
+
+    var response = await http.delete(
+    'https://volospesa-server.herokuapp.com/api/v1/messages/' + noteID,
+    headers: {
+      'content-type': 'application/json'
+    });
+
+    if (response.statusCode == 200) {
+      print('DELETE avvenuta correttamente');
+    }
+    else {
+      print('Errore durante la DELETE');   
+      print(response.statusCode); 
+    }
+  }
