@@ -261,7 +261,6 @@ class MapPageState extends State<MapPage> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: _boxes(
-                      "https://cdn.dribbble.com/users/67525/screenshots/4517042/agarey_grocerydribbble.png",
                       usersData[index]["longitudine"],
                       usersData[index]["latitudine"],
                       usersData[index]["nome"],
@@ -275,7 +274,7 @@ class MapPageState extends State<MapPage> {
     );
   }
 
-  Widget _boxes(String _image, double lat,double long,String boomerName, int index) {
+  Widget _boxes(double lat,double long,String boomerName, int index) {
     return  GestureDetector(
         onTap: () {
           //_gotoLocation(lat,long);
@@ -297,7 +296,7 @@ class MapPageState extends State<MapPage> {
                       borderRadius: new BorderRadius.circular(24.0),
                       child: Image(
                         fit: BoxFit.fill,
-                        image: NetworkImage(_image),
+                        image: AssetImage('assets/images/baggy.png'),
                       ),
                     )
                   ),
