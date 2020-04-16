@@ -41,7 +41,7 @@ class _SpesaWidgetState extends State<SpesaWidget> {
               children: <Widget>[
                       Center(
                           child: Text(
-                            'Digita qua sotto la tua spesa e premi CONFERMA', 
+                            'Digita qua sotto la tua spesa e premi CONTINUA', 
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'Averta',

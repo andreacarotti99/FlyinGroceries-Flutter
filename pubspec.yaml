@@ -42,6 +42,8 @@ dependencies:
   flutter_google_places: ^0.2.3
   # location_permissions: ^2.0.5
   permission_handler: ^5.0.0
+  url_launcher: ^5.4.2
+  map_controller: ^0.7.1
 
   
 
@@ -78,6 +80,9 @@ flutter:
      - assets/images/usermarker.png
      - assets/images/logo.png
      - assets/images/baggy.png
+     - assets/images/groceriesbagnobackground.png
+     - assets/images/logobagcolor.png
+
 
 
 

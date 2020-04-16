@@ -5,8 +5,11 @@ import 'package:VoloSpesa/theame.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:VoloSpesa/CRUD.dart';
 
-Future<void>getLocation() async {
+
+
+Future<void>getTheLocation() async {
   askForLocation();
   var position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 }
@@ -22,21 +25,13 @@ class ChoosePage extends StatefulWidget {
 
 class _ChoosePageState extends State<ChoosePage> {
 
-  // Future<void> requestPermission(Permission permission) async {
-  //   PermissionStatus _permissionStatus = PermissionStatus.undetermined;
-  //   final status = await permission.request();
-
-  //   setState(() {
-  //     print(status);
-  //     _permissionStatus = status;
-  //     print(_permissionStatus);
-  //   });
-  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    askForLocation();
+    //var position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     //requestPermission(Permission.locationWhenInUse);
     
   }
@@ -44,9 +39,9 @@ class _ChoosePageState extends State<ChoosePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-          future: getLocation(),
+          future: getTheLocation(),
           builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.done) {
+          if( snapshot.connectionState == ConnectionState.done ) {
             return Container(
               color: primary,
               child: Column(
@@ -61,10 +56,10 @@ class _ChoosePageState extends State<ChoosePage> {
                         child: Image(
                           height: 200,
                           width: 200,
-                          image: AssetImage('assets/images/logo.png')),
+                          image: AssetImage('assets/images/logobagcolor.png')),
                       ),
                       Container(
-                        margin: EdgeInsets.all(10.0),
+                        margin: EdgeInsets.only(bottom: 30.0),
                         child: Center(
                             child: Text(
                               'Seleziona il profilo che meglio ti identifica', 

@@ -1,3 +1,4 @@
+import 'package:VoloSpesa/bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
@@ -7,12 +8,15 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:VoloSpesa/theame.dart';
 import 'package:location_permissions/location_permissions.dart';
-import 'package:VoloSpesa/choosepage.dart';
 
-import 'package:VoloSpesa/CRUD.dart';
 import 'package:VoloSpesa/markerhandler.dart';
 
-const minDistance = 400000000;
+import 'dart:async';
+
+import 'package:VoloSpesa/detailscontainer.dart';
+
+
+
 Position position;
 
 class MapPage extends StatefulWidget {
@@ -20,15 +24,19 @@ class MapPage extends StatefulWidget {
   MapPageState createState() => MapPageState();
 }
 
-class MapPageState extends State<MapPage> {
+class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   List <Marker> allMarkers = [];
   List data;
   List usersData;
+  List closeBoomersList = [];
+  MapController mapController;
+  //StatefulMapController statefulMapController;
   
   @override
   void initState() {
     super.initState();
     getMarkers();
+    mapController = MapController();
   }
 
   getMarkers() async {
@@ -37,12 +45,13 @@ class MapPageState extends State<MapPage> {
     print(response.statusCode);
     position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     //PermissionStatus permission = await LocationPermissions().checkPermissionStatus();
-    addUserMarker(allMarkers, position.latitude, position.longitude, context);
 
     setState(() {
       usersData = data;
     });
     
+    addUserMarker(allMarkers, position.latitude, position.longitude, context);
+
     for (int i = 0; i < usersData.length; i++) {
       allMarkers.add(
         new Marker(
@@ -54,171 +63,16 @@ class MapPageState extends State<MapPage> {
               icon: Image(image: new AssetImage("assets/images/sitmarker.png")),
               iconSize: 140.0,
               onPressed: () {
-                
-                print('Marker tapped');
-                showModalBottomSheet(context: context, backgroundColor: Colors.transparent, builder: (builder){
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).padding.top + MediaQuery.of(context).padding.bottom,
-                    ),
-                    child: Material(
-                      elevation: 12.0,
-                      color: primary,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(32.0),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          SizedBox(height: 8.0),
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox.fromSize(
-                                  size: Size.fromRadius(38.0),
-                                  child: Material(
-                                    color: primary,
-                                    shape: CircleBorder(),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Image.asset(
-                                      'assets/images/sitmarker.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 16.0),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        usersData[i]["nome"],
-                                        
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text('Consegnagli adesso la spesa',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black,                                     
-                                        ),                                    
-                                      ),
-                                      Text(
-                                        usersData[i]["telefono"].toString(),
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),                                    
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Colors.blue[100],
-                                    size: 25,
-                                  ),
-                                onPressed: () { Navigator.of(context).pop();}
-                                )
-                              ],
-                            ),
-                          ),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      height: 2.5,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 2.5,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(height: 20),
-                                //First Button
-                                Material(
-                                  elevation: 10.0,
-                                  shadowColor: Colors.black45,
-                                  shape: StadiumBorder(),
-                                  clipBehavior: Clip.antiAlias,
-                                  color: Colors.blue[100],
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"], usersData[i]["_id"]);
-                                      //serve per ricostruire la mappa senza marker che si è eliminiato
-                                      setState(() {
-                                        allMarkers = [];
-                                        getMarkers();
-                                      });
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 32.0,
-                                            vertical: 20.0,
-                                          ),
-                                          child: Text(
-                                            'SEGNA COME CONSEGNA AVVENUTA',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 30),
-                                BottoneUi(text: 'CHIAMA'),
-                              ],
-                            ),
-                          ),       
-                        ],
-                      ),
-                    ),
-                  );
+                showModalBottomSheet(context: context, elevation: 400.0, backgroundColor: Colors.transparent, builder: (builder){
+                  return buildBottomSheet(context, usersData, i);
                 });
               },
             ),
           )
         )
       );
-    
     }
   }
-
-  
-
 
 
   Widget _buildMapBox(BuildContext context, double latitudine, double longitudine) {
@@ -240,13 +94,12 @@ class MapPageState extends State<MapPage> {
             new MarkerLayerOptions(
               markers: allMarkers
             )
-
-          ]
+          ],
+          mapController: mapController,
         )
     );
   }
  
-  
   Widget _buildContainer() {
     return Align(
       alignment: Alignment.bottomLeft,
@@ -255,29 +108,29 @@ class MapPageState extends State<MapPage> {
         height: 140.0,
         child: data == null ? Center(child: SpinKitThreeBounce(color: Colors.white, size: 30.0,)) : 
             ListView.builder(
-              itemCount: usersData == null ? 0 : usersData.length,
+              itemCount: closeBoomersList == null ? 0 : closeBoomersList.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: _boxes(
-                      usersData[index]["longitudine"],
-                      usersData[index]["latitudine"],
-                      usersData[index]["nome"],
-                      index
+                      closeBoomersList[index]["longitudine"],
+                      closeBoomersList[index]["latitudine"],
+                      closeBoomersList[index]["nome"],
+                      index,
+                      closeBoomersList
                   ),
                 );
-
               }
             ),
       ),
     );
   }
 
-  Widget _boxes(double lat,double long,String boomerName, int index) {
+  Widget _boxes(double lat,double long, String boomerName, int index, List closeBoomersList) {
     return  GestureDetector(
-        onTap: () {
-          //_gotoLocation(lat,long);
+        onTap: () { 
+          animatedMapMove(LatLng(closeBoomersList[index]['latitudine'], closeBoomersList[index]['longitudine']), 13.2);
         },
         child:Container(
           child: new FittedBox(
@@ -300,13 +153,12 @@ class MapPageState extends State<MapPage> {
                       ),
                     )
                   ),
-                  Container(
+                  Container( 
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: myDetailsContainer(boomerName, index),
+                      child: myDetailsContainer(boomerName, index, closeBoomersList),
                     ),
                   ),
-
                 ]
               )
             ),
@@ -315,47 +167,45 @@ class MapPageState extends State<MapPage> {
     );
   }
 
-  Widget myDetailsContainer(String boomerName, int index) {
-    return SizedBox(
-      width: 200,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-                child: Text(boomerName.toUpperCase(),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Averta',
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold
-                ),
-            )
-          ),
-          SizedBox(height: 10.0),
-          Container(
-            child: Row(
-              children: <Widget>[
-                Container(width: 24.0, height: 24.0, child: Icon(Icons.phone, color: Colors.green[300],)),
-                SizedBox(width: 8.0),
-                Text(
-                  usersData[index]["telefono"].toString(),
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ],
-            )
-          ),
-        ],
-      ),
-    );
+  Future<void>getLocation() async {
+    closeBoomersList = [];
+    position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    http.Response response = await http.get('https://volospesa-server.herokuapp.com/api/v1/messages');
+    usersData = json.decode(response.body);
+
+    for (int i = 0; i < usersData.length; i++) {
+      const double maxDistanceForContainers = 3000;
+      double distanceBetweenUsers = await Geolocator().distanceBetween(position.latitude, position.longitude, usersData[i]['latitudine'], usersData[i]['longitudine']);
+      //calculate distance(usersBetweenDistance) between the usersData[i] coordinates and the location of the user
+      if (distanceBetweenUsers < maxDistanceForContainers) {
+        //adding to the list of elements (old people) close to the users
+        closeBoomersList.add(usersData[i]);
+        print(distanceBetweenUsers);
+      }
+    }
   }
 
-  Future<void>getLocation() async {
-    position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  }
+    void animatedMapMove(LatLng destLocation, double destZoom) {
+      final _latTween = Tween<double>(begin: mapController.center.latitude, end: destLocation.latitude);
+      final _lngTween = Tween<double>(begin: mapController.center.longitude, end: destLocation.longitude);
+      final _zoomTween = Tween<double>(begin: mapController.zoom, end: destZoom);
+      var controller = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+      Animation<double> animation = CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+
+      controller.addListener(() {
+        mapController.move(
+            LatLng(_latTween.evaluate(animation), _lngTween.evaluate(animation)),
+            _zoomTween.evaluate(animation));
+      });
+      animation.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.dispose();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.dispose();
+        }
+      });
+      controller.forward();
+    }
 
   @override
   Widget build(BuildContext context) {

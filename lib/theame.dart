@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
   Color secondary = Color(0xffffffff);
   Color primaryButtonColor =   Colors.orangeAccent; //HexColor("e74c3c");
   Color secondaryButtonColor = HexColor("212f3c");
+    
+  TextStyle testi = TextStyle(fontFamily: 'Averta',fontSize: 16.0, color: Colors.black);
+
 
 
   TextStyle headlines = TextStyle(letterSpacing: 2.0,fontSize: 15, color: HexColor("d3d3d3"));

@@ -18,7 +18,7 @@ class ResultPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(width: 60,),
-            Image.asset('assets/images/logo.png', fit: BoxFit.contain, height: 32.0),
+            Image.asset('assets/images/logobagcolor.png', fit: BoxFit.contain, height: 32.0),
             
           ],
         ),

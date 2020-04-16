@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:VoloSpesa/models.dart';
+import 'package:VoloSpesa/animatedButton.dart';
 
 class ConfirmationPage extends StatelessWidget {
   BoomerInfo boomerInfo;
@@ -20,7 +21,7 @@ class ConfirmationPage extends StatelessWidget {
             Container(
               width: 400,
               height: 300,
-              child: Text('Grazie per averci comunicato la tua spesa, un volonatrio sarà presto in contatto con te, premi CONFERMA per mandare la richiesta',
+              child: Text('Grazie per averci comunicato la tua spesa, un volonatrio sarà presto in contatto con te, premi CONFERMA per completare la richiesta',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -29,7 +30,7 @@ class ConfirmationPage extends StatelessWidget {
               )),
             ),
             
-              Padding(
+             /*  Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Material(
                   elevation: 10.0,
@@ -44,7 +45,7 @@ class ConfirmationPage extends StatelessWidget {
                       print(boomerInfo.name);
                       print(boomerInfo.address);
                       print(boomerInfo.phone);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
 
                     },
                     child: Row(
@@ -69,13 +70,40 @@ class ConfirmationPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ), */
 
-
-
-
-
-
+              AnimatedButton(
+                onTap: () {
+                  print("button pressed");
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
+                  uploadBoomerInfo(boomerInfo.name, boomerInfo.address, boomerInfo.phone, boomerInfo.groceries, boomerInfo.lat, boomerInfo.long);
+                    print(boomerInfo.groceries);
+                    print(boomerInfo.name);
+                    print(boomerInfo.address);
+                    print(boomerInfo.phone);
+                },
+                animationDuration: const Duration(milliseconds: 1500),
+                initialText: "Conferma",
+                finalText: "Ordine Confermato",
+                iconData: Icons.check,
+                iconSize: 38.0,
+                buttonStyle: ButtonStyle(
+                  primaryColor: Colors.green[300],
+                  secondaryColor: Colors.white,
+                  elevation: 20.0,
+                  initialTextStyle: TextStyle(
+                    fontFamily: 'Averta',
+                    fontSize: 24.0,
+                    color: Colors.white,
+                  ),
+                  finalTextStyle: TextStyle(
+                    fontFamily: 'Averta',
+                    fontSize: 24.0,
+                    color: Colors.green[300],
+                  ),
+                  borderRadius: 30.0,
+                )
+              )
 
           ]
         ),
@@ -109,3 +137,5 @@ Future<http.Response> uploadBoomerInfo(String nome, String indirizzo, String tel
     print(response.statusCode);   
   }
 }
+
+
