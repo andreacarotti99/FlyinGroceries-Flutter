@@ -91,7 +91,7 @@ class _SpesaWidgetState extends State<SpesaWidget> {
                     shadowColor: Colors.black45,
                     shape: StadiumBorder(),
                     clipBehavior: Clip.antiAlias,
-                    color: Colors.blue,
+                    color: colorNextButton,
                     child: InkWell(
                       onTap: () {
                   

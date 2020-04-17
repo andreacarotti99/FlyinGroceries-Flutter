@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
   Color secondary = Color(0xffffffff);
   Color primaryButtonColor =   Colors.orangeAccent; //HexColor("e74c3c");
   Color secondaryButtonColor = HexColor("212f3c");
+  Color colorNextButton = HexColor("3453f5");
+  Color bluChiaro = HexColor("e7e9f9");
+
+  
     
   TextStyle testi = TextStyle(fontFamily: 'Averta',fontSize: 16.0, color: Colors.black);
+  TextStyle continuaButton = TextStyle(fontFamily: 'Averta',fontSize: 24.0, color: Colors.black);
+  TextStyle titoli = TextStyle(fontFamily: 'Averta',fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.black);
+
+
 
 
 

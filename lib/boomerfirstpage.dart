@@ -54,18 +54,16 @@ class _MyFormsPageState extends State<MyFormsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Center(
-                child: Text(
-                  'Compila i campi qua sotto e premi CONTINUA', 
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Averta',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    color: Colors.black
-                  )
+                child: Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    'Compila i campi qua sotto e premi CONTINUA', 
+                    textAlign: TextAlign.center,
+                    style: titoli,
+                  ),
                 ),
               ),
-              SizedBox(height: 10.0),
+              
               
               Form(
                 key: _formKey,
@@ -227,7 +225,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
                   shadowColor: Colors.black45,
                   shape: StadiumBorder(),
                   clipBehavior: Clip.antiAlias,
-                  color: Colors.blue,
+                  color: colorNextButton,
                   child: InkWell(
                     onTap: () {
                 

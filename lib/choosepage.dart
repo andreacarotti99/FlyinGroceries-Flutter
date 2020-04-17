@@ -59,7 +59,7 @@ class _ChoosePageState extends State<ChoosePage> {
                           image: AssetImage('assets/images/logobagcolor.png')),
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 30.0),
+                        margin: EdgeInsets.only(bottom: 30.0, left: 10.0, right: 10.0),
                         child: Center(
                             child: Text(
                               'Seleziona il profilo che meglio ti identifica', 
@@ -78,7 +78,7 @@ class _ChoosePageState extends State<ChoosePage> {
                   ),
                   
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Expanded(
                           flex: 1,
@@ -179,6 +179,27 @@ class _ChoosePageState extends State<ChoosePage> {
                     )
                     ],
                   ),
+                  SizedBox(height: 14.0),
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: bluChiaro,
+                        borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      width: 120.0,
+                      height: 50.0,
+                      child: Center(
+                        child: Text(
+                          'Contattaci',
+                          style: TextStyle(
+                            color: colorNextButton,
+                            fontFamily: 'Averta',
+                            fontSize: 14.0
+                          )
+                        )
+                      ),
+                    )
+                  )
                 ],
               ),
           );

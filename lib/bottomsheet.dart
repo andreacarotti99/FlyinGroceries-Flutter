@@ -1,3 +1,4 @@
+import 'package:VoloSpesa/alertbottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:VoloSpesa/theame.dart';
 import 'package:VoloSpesa/bottoneUi.dart';
@@ -16,6 +17,7 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -38,7 +40,6 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      
                       Row(
                         children: <Widget>[
                           Icon(Icons.account_circle, color: primary),
@@ -63,18 +64,14 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                       ),
                       Row(
                         children: <Widget>[
-                          Icon(Icons.home, color: Colors.blue[300]),
+                          Icon(Icons.home, color: colorNextButton),
                           SizedBox(width: 5.0),
                           Expanded(child: Container(child: Text(usersData[i]['indirizzo'], style: testi))),
                         ],
                       ),
-                       
                     ],
                   ),
                 ),
-                // IconButton(icon: Icon(Icons.cancel,color: Colors.grey[300],size: 25,),
-                //   onPressed: () {Navigator.of(context).pop();}
-                // )
               ],
             ),
           ),
@@ -97,7 +94,6 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                   ),
                 ],
               ),
-              
             ],
           ),
           Padding(
@@ -113,8 +109,6 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                         color: Colors.black,
                         fontFamily: 'Averta',
                         fontSize: 14.0
-
-
                     )))
                 ),
                 SizedBox(height: 6.0),
@@ -144,7 +138,6 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                                 child: SingleChildScrollView(
                                   child: Container(
                                     width: MediaQuery.of(context).size.width * 0.8,
-
                                     child: Text(
                                       usersData[i]['spesa'],
                                       style: TextStyle(
@@ -156,7 +149,6 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                                   ),
                                 ),
                               ),
-                            
                           ],
                         ),
                       ],
@@ -169,13 +161,11 @@ Widget buildBottomSheet(BuildContext context, List usersData, int i) {
                   shadowColor: Colors.black45,
                   shape: StadiumBorder(),
                   clipBehavior: Clip.antiAlias,
-                  color: Colors.blue[100],
+                  color: colorNextButton,
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pop();
-                      deleteMarker(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"], usersData[i]["_id"]);
                       //serve per ricostruire la mappa senza marker che si è eliminiato
-                      Navigator.of(context).pop();
+                      showAlertConfirmationButton(usersData[i]["nome"], usersData[i]["telefono"],usersData[i]["indirizzo"],usersData[i]["spesa"], usersData[i]["_id"], context);
 
                     },
                     child: Row(
