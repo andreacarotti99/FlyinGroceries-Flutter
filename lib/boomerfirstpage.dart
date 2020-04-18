@@ -93,7 +93,10 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               SizedBox(
                                 width: 280,
                                 child: TextFormField(
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                    fontFamily: 'Averta',
+                                    color: Colors.black
+                                  ),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo nome',
@@ -136,7 +139,9 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                 width: 280,
                                 child: TextFormField(
                                   keyboardType: TextInputType.numberWithOptions(),
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                    fontFamily: 'Averta',
+                                    color: Colors.black),
                                   decoration: InputDecoration(
 
                                     border: InputBorder.none,
@@ -179,6 +184,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                 child: TextFormField(
                                   onTap: () async {
                                     Prediction p = await PlacesAutocomplete.show(
+                                      
                                       context: context,
                                       apiKey: "AIzaSyCvkzzEUKf9BF4bSZdBzvvLuU9s3xP2Ae8",
                                       mode: Mode.overlay,
@@ -187,13 +193,14 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                       overlayBorderRadius: BorderRadius.circular(14.0),
                                       hint: 'Inserisci qui il tuo indirizzo',
                                       logo: Container(width: 380, height: 10),
-                                      
                                     );
                                     displayPrediction(p);
 
                                     
                                   },
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                    fontFamily: 'Averta',
+                                    color: Colors.black),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo indirizzo',

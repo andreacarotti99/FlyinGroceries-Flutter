@@ -8,6 +8,8 @@ import 'package:VoloSpesa/choosepage.dart';
 
 
 Future<void> showAlertConfirmationButton(String nome, String indirizzo, String telefono, String spesa, var noteID, BuildContext context) {
+  bool orderCompleted = false;
+
    var alertStyle = AlertStyle(
      overlayColor: Colors.black54,
      backgroundColor: primary,
@@ -43,7 +45,7 @@ Future<void> showAlertConfirmationButton(String nome, String indirizzo, String t
           onPressed: () {
             deleteMarker(nome, indirizzo, telefono, spesa, noteID);
             
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage(orderCompleted: orderCompleted,)));
 
 
           },

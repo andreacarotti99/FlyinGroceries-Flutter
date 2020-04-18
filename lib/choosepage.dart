@@ -19,12 +19,15 @@ Future<void>askForLocation() async {
 }
 
 class ChoosePage extends StatefulWidget {
+  bool orderCompleted;
+  ChoosePage({Key key, @required this.orderCompleted}) : super(key: key);
+
   @override
   _ChoosePageState createState() => _ChoosePageState();
 }
 
 class _ChoosePageState extends State<ChoosePage> {
-
+  
 
   @override
   void initState() {
@@ -180,26 +183,27 @@ class _ChoosePageState extends State<ChoosePage> {
                     ],
                   ),
                   SizedBox(height: 14.0),
-                  Center(
+                  widget.orderCompleted ? Center(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: bluChiaro,
-                        borderRadius: BorderRadius.circular(20.0)
+                        color: rosino,
+                        borderRadius: BorderRadius.circular(10.0)
                       ),
-                      width: 120.0,
+                      width: 240.0,
                       height: 50.0,
                       child: Center(
                         child: Text(
-                          'Contattaci',
+                          'Il tuo Ordine è in sospeso, attendi che un volontario ti contatti',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: colorNextButton,
+                            color: rosascuro,
                             fontFamily: 'Averta',
                             fontSize: 14.0
                           )
                         )
                       ),
                     )
-                  )
+                  ) : SizedBox(height: 0.0)
                 ],
               ),
           );

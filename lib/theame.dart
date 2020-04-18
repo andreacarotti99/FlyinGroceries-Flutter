@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
   Color secondaryButtonColor = HexColor("212f3c");
   Color colorNextButton = HexColor("3453f5");
   Color bluChiaro = HexColor("e7e9f9");
+  Color rosascuro = HexColor("c57ca1");
+  Color rosino = HexColor("f7dfeb");
+
 
   
     

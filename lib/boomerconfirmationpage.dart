@@ -7,6 +7,7 @@ import 'package:VoloSpesa/models.dart';
 import 'package:VoloSpesa/animatedButton.dart';
 
 class ConfirmationPage extends StatelessWidget {
+  bool orderCompleted = false;
   BoomerInfo boomerInfo;
   ConfirmationPage({Key key, @required this.boomerInfo}) : super(key: key);
 
@@ -75,12 +76,14 @@ class ConfirmationPage extends StatelessWidget {
               AnimatedButton(
                 onTap: () {
                   print("button pressed");
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
                   uploadBoomerInfo(boomerInfo.name, boomerInfo.address, boomerInfo.phone, boomerInfo.groceries, boomerInfo.lat, boomerInfo.long);
                     print(boomerInfo.groceries);
                     print(boomerInfo.name);
                     print(boomerInfo.address);
                     print(boomerInfo.phone);
+                  orderCompleted = true;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage(orderCompleted: orderCompleted,)));
+
                 },
                 animationDuration: const Duration(milliseconds: 1500),
                 initialText: "Conferma",
