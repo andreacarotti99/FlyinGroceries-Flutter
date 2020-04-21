@@ -31,47 +31,6 @@ class ConfirmationPage extends StatelessWidget {
               )),
             ),
             
-             /*  Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Material(
-                  elevation: 10.0,
-                  shadowColor: Colors.black45,
-                  shape: StadiumBorder(),
-                  clipBehavior: Clip.antiAlias,
-                  color: Colors.green[300],
-                  child: InkWell(
-                    onTap: () {
-                      uploadBoomerInfo(boomerInfo.name, boomerInfo.address, boomerInfo.phone, boomerInfo.groceries, boomerInfo.lat, boomerInfo.long);
-                      print(boomerInfo.groceries);
-                      print(boomerInfo.name);
-                      print(boomerInfo.address);
-                      print(boomerInfo.phone);
-                      //Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage()));
-
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32.0,
-                            vertical: 20.0,
-                          ),
-                          child: Text(
-                            'CONFERMA',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Averta',
-                              fontSize: 16.0
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ), */
 
               AnimatedButton(
                 onTap: () {
@@ -117,7 +76,7 @@ class ConfirmationPage extends StatelessWidget {
 
 Future<http.Response> uploadBoomerInfo(String nome, String indirizzo, String telefono, String spesa, double latitudine, double longitudine) async {
   final http.Response response = await http.post(
-    'https://volospesa-server.herokuapp.com/api/v1/messages',
+    'http://api.volospesa.org/api/v1/messages',
     headers: {
       'content-type': 'application/json' 
     },
@@ -141,4 +100,5 @@ Future<http.Response> uploadBoomerInfo(String nome, String indirizzo, String tel
   }
 }
 
+//https://volospesa-server.herokuapp.com/api/v1/messages
 

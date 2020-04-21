@@ -7,8 +7,8 @@ import 'package:VoloSpesa/choosepage.dart';
 
 
 
-Future<void> showAlertConfirmationButton(String nome, String indirizzo, String telefono, String spesa, var noteID, BuildContext context) {
-  bool orderCompleted = false;
+Future<void> showPrivacyBanner(BuildContext context) {
+  
 
    var alertStyle = AlertStyle(
      overlayColor: Colors.black54,
@@ -31,9 +31,9 @@ Future<void> showAlertConfirmationButton(String nome, String indirizzo, String t
   return Alert(
       style: alertStyle,
       context: context,
-      type: AlertType.warning,
-      title: "CONFERMA PRESA IN CARICO",
-      desc: "Una volta confermato, l'ordine verrà rimosso dalla mappa",
+      type: AlertType.info,
+      title: "Avvertenze",
+      desc: "Perdavore ricorda che le misure di igiene disposte sono molto importanti e il mancato rispetto di esse potrebbe mettere la vita tua, e degli altri in pericolo",
       buttons: [
         DialogButton(
           radius: BorderRadius.circular(20.0),
@@ -43,25 +43,10 @@ Future<void> showAlertConfirmationButton(String nome, String indirizzo, String t
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () {
-            deleteMarker(nome, indirizzo, telefono, spesa, noteID);
-            
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ChoosePage(orderCompleted: orderCompleted,)));
-
-
+            Navigator.pop(context);
           },
         ),
-        DialogButton(
-          radius: BorderRadius.circular(20.0),
-          child: Text(
-            "Annulla",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.pop(context),
-          gradient: LinearGradient(colors: [
-            colorNextButton,
-            colorNextButton,
-          ]),
-        )
+        
       ],
     ).show();
 }

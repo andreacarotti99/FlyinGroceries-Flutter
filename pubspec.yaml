@@ -56,7 +56,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: 'assets/images/groceriesbag.png'
+  image_path: 'assets/images/groceries_bianco.png'
   android: true
   ios: true
 

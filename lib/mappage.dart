@@ -40,9 +40,10 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   getMarkers() async {
-    http.Response response = await http.get('https://volospesa-server.herokuapp.com/api/v1/messages');
+    http.Response response = await http.get('http://api.volospesa.org/api/v1/messages');
     data = json.decode(response.body);
     print(response.statusCode);
+    print('Connection OK');
     position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     //PermissionStatus permission = await LocationPermissions().checkPermissionStatus();
 
@@ -170,7 +171,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   Future<void>getLocation() async {
     closeBoomersList = [];
     position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    http.Response response = await http.get('https://volospesa-server.herokuapp.com/api/v1/messages');
+    //
+    http.Response response = await http.get('http://api.volospesa.org/api/v1/messages');
     usersData = json.decode(response.body);
 
     for (int i = 0; i < usersData.length; i++) {

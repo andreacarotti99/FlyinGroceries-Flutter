@@ -1,3 +1,4 @@
+import 'package:VoloSpesa/privacybanner.dart';
 import 'package:flutter/material.dart';
 import 'package:VoloSpesa/appbarmappage.dart';
 import 'package:VoloSpesa/boomerfirstpage.dart';
@@ -7,11 +8,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:VoloSpesa/CRUD.dart';
 
-
+bool mostrato = false;
 
 Future<void>getTheLocation() async {
   askForLocation();
   var position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  
 }
 
 Future<void>askForLocation() async {
@@ -34,6 +36,8 @@ class _ChoosePageState extends State<ChoosePage> {
     // TODO: implement initState
     super.initState();
     askForLocation();
+    
+    
     //var position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     //requestPermission(Permission.locationWhenInUse);
     

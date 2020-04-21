@@ -66,11 +66,18 @@ class _SpesaWidgetState extends State<SpesaWidget> {
                                 child: TextFormField(
                                   keyboardType: TextInputType.multiline,
                                   maxLines: null,
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                    fontFamily: 'Averta',
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  
+                                  ),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Inserisci la tua spesa',
-                                    hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
+                                    hintStyle: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.grey, fontFamily: 'Averta'),
                                   ),
                                   controller: _groceriesController,
                                   validator: (String value) {

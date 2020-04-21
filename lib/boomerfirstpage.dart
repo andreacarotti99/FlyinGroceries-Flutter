@@ -41,6 +41,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
         boomerInfo.lat = lat;
         boomerInfo.long = lng;
         _addressController.text = p.description;
+        print(address);
       }
     }
     
@@ -64,7 +65,6 @@ class _MyFormsPageState extends State<MyFormsPage> {
                 ),
               ),
               
-              
               Form(
                 key: _formKey,
                 child: Padding(
@@ -72,7 +72,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      width: 400,
+                      width: 380,
                       height: 60,
                           decoration: BoxDecoration(
                             color: secondary,
@@ -91,9 +91,10 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               ),
                               SizedBox(width: 10.0,),
                               SizedBox(
-                                width: 280,
+                                width: 250,
                                 child: TextFormField(
                                   style: TextStyle(
+                                    fontSize: 16.0,
                                     fontFamily: 'Averta',
                                     color: Colors.black
                                   ),
@@ -101,6 +102,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo nome',
                                     hintStyle: TextStyle(
+                                      fontSize: 16.0,
                                       color: Colors.grey,
                                       fontFamily: 'Averta'
                                     ),
@@ -136,17 +138,19 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               ),
                               SizedBox(width: 10.0,),
                               SizedBox(
-                                width: 280,
+                                width: 250,
                                 child: TextFormField(
                                   keyboardType: TextInputType.numberWithOptions(),
                                   style: TextStyle(
+                                    fontSize: 16.0,
                                     fontFamily: 'Averta',
                                     color: Colors.black),
                                   decoration: InputDecoration(
-
                                     border: InputBorder.none,
                                     hintText: 'Inserisci il tuo telefono',
-                                    hintStyle: TextStyle(color: Colors.grey, fontFamily: 'Averta'),
+                                    hintStyle: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.grey, fontFamily: 'Averta'),
                                   ),
                                   controller: _phoneController,
                                   validator: (String value) {
@@ -180,7 +184,7 @@ class _MyFormsPageState extends State<MyFormsPage> {
                               SizedBox(width: 10.0,),
                               
                               SizedBox(
-                                width: 280,
+                                width: 228,
                                 child: TextFormField(
                                   onTap: () async {
                                     Prediction p = await PlacesAutocomplete.show(
@@ -192,13 +196,14 @@ class _MyFormsPageState extends State<MyFormsPage> {
                                       components: [Component(Component.country, "it")],
                                       overlayBorderRadius: BorderRadius.circular(14.0),
                                       hint: 'Inserisci qui il tuo indirizzo',
-                                      logo: Container(width: 380, height: 10),
+                                      logo: Container(width: 380, height: 16),
                                     );
                                     displayPrediction(p);
 
                                     
                                   },
                                   style: TextStyle(
+                                    fontSize: 16.0,
                                     fontFamily: 'Averta',
                                     color: Colors.black),
                                   decoration: InputDecoration(
