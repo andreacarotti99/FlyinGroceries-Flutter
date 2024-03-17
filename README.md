@@ -15,9 +15,10 @@ _This project was born during the Covid-19 lockdown in Milan, Italy, and was dev
 
 <img src="/assets/images/storyboard_mobile.png"></img>
 
+[Video demonstration](https://vimeo.com/409938047)
+
 ### Video example
 
-[![Usage](Video demonstration)](https://vimeo.com/409938047)
 
 
 ## Usage
