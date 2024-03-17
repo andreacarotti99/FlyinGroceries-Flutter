@@ -8,12 +8,17 @@
 
 ##
 
-_This project was born during the Covid-19 lockdown in Milan, Italy, and was developed together with [Nicolas Racchi](https://github.com/nicolas-racchi) as a way to help our local volunteering community._
+_This project was born during the Covid-19 lockdown in Milan, Italy, and was developed together with [@merklefruit](https://github.com/merklefruit) as a way to help our local volunteering community._
 
 
 ### We enable volunteers in your area to bring groceries to people in need during COVID lockdown
 
 <img src="/assets/images/storyboard_mobile.png"></img>
+
+### Video example
+
+[![Usage](Video demonstration)](https://vimeo.com/409938047)
+
 
 ## Usage
 
